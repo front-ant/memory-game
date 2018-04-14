@@ -1,8 +1,10 @@
 /*
  * Create a list that holds all of your cards
  */
-const card = document.getElementsByClassName('card');
+let card = document.getElementsByClassName('card');
 const cards = [...card];
+const deck = document.getElementsByClassName('deck').item(0);
+
 
 /*
  * Display the cards on the page
@@ -29,10 +31,9 @@ shuffle(cards);
 
 // loop through each card and create its HTML
 // *   - add each card's HTML to the page
-for (cardItem of cards) {
-  const deck = document.getElementsByClassName('deck').item(0);
-  deck.appendChild(cardItem);
-  console.log(deck);
+for (card of cards) {
+  deck.appendChild(card);
+  // console.log(deck);
 };
 
 /*
@@ -45,3 +46,7 @@ for (cardItem of cards) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+deck.addEventListener('click', function(event) {
+  if (event.target.nodeName === 'LI')
+  console.log("the card was clicked");
+});
