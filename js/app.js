@@ -46,7 +46,14 @@ for (card of cards) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+ function openCard() {
+   if (event.target.nodeName === 'LI') {
+     event.target.classList.toggle('open');
+     event.target.classList.toggle('show');
+     console.log("the card was clicked");
+ }};
+
 deck.addEventListener('click', function(event) {
-  if (event.target.nodeName === 'LI')
-  console.log("the card was clicked");
-});
+  openCard();
+}
+);
