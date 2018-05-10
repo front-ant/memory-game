@@ -4,7 +4,7 @@
 let card = document.getElementsByClassName('card');
 const cards = [...card];
 const deck = document.getElementsByClassName('deck').item(0);
-const openCards = [];
+let openCards = [];
 let match = false;
 
 /*
@@ -52,21 +52,31 @@ for (card of cards) {
  };
 
 function markAsOpened() {
-let currentCardSymbol = event.target.firstElementChild.getAttribute("class");
+let currentCardSymbol = event.target.firstElementChild.getAttribute('class');
 openCards.push(currentCardSymbol);
 console.log(openCards);
  };
 
  function checkMatch() {
-   if (openCards.length === 2) {
    if (openCards[0] === openCards[1]) {
       match = true;
       console.log("It's a match!");
     }
      else {
+       match = false;
        console.log("No match, sorry!")
      };
- }};
+ };
+
+ function matchOrNo() {
+   if (match === false) {
+     cards.forEach(function(card) {
+       card.classList.remove('open', 'show', 'clicked');
+     });    
+     openCards = [];
+   }
+   console.log(openCards);
+ }
 
 deck.addEventListener('click', function(event) {
   if (event.target.nodeName === 'LI'
@@ -75,6 +85,9 @@ deck.addEventListener('click', function(event) {
   event.target.classList.add('clicked');
   openCard();
   markAsOpened();
-  checkMatch();
+  if (openCards.length === 2) {
+      checkMatch();
+      matchOrNo();
+    };
 }
 });
