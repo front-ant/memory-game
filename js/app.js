@@ -5,6 +5,7 @@ let card = document.getElementsByClassName('card');
 const cards = [...card];
 const deck = document.getElementsByClassName('deck').item(0);
 const openCards = [];
+let match = false;
 
 /*
  * Display the cards on the page
@@ -56,12 +57,24 @@ openCards.push(currentCardSymbol);
 console.log(openCards);
  };
 
+ function checkMatch() {
+   if (openCards.length === 2) {
+   if (openCards[0] === openCards[1]) {
+      match = true;
+      console.log("It's a match!");
+    }
+     else {
+       console.log("No match, sorry!")
+     };
+ }};
+
 deck.addEventListener('click', function(event) {
   if (event.target.nodeName === 'LI'
-  && openCards.length <= 1
+  && openCards.length < 2
   && event.target.classList.contains('clicked') === false) {
   event.target.classList.add('clicked');
   openCard();
   markAsOpened();
+  checkMatch();
 }
 });
