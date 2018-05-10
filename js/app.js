@@ -48,8 +48,8 @@ for (card of cards) {
  */
  function openCard() {
    if (event.target.nodeName === 'LI') {
-     event.target.classList.toggle('open');
-     event.target.classList.toggle('show');
+     event.target.classList.add('open');
+     event.target.classList.add('show');
      console.log("the card was clicked");
  }};
 
