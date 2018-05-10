@@ -47,18 +47,20 @@ for (card of cards) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
  function openCard() {
-     event.target.classList.add('open');
-     event.target.classList.add('show');
+     event.target.classList.add('open', 'show');
  };
 
 function markAsOpened() {
-let currentCard = event.target.firstElementChild.getAttribute("class");
-openCards.push(currentCard);
+let currentCardSymbol = event.target.firstElementChild.getAttribute("class");
+openCards.push(currentCardSymbol);
 console.log(openCards);
  };
 
 deck.addEventListener('click', function(event) {
-  if (event.target.nodeName === 'LI') {
+  if (event.target.nodeName === 'LI'
+  && openCards.length <= 1
+  && event.target.classList.contains('clicked') === false) {
+  event.target.classList.add('clicked');
   openCard();
   markAsOpened();
 }
