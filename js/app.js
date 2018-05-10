@@ -70,13 +70,13 @@ console.log(openCards);
 
  function matchOrNo() {
    if (match === false) {
-     cards.forEach(function(card) {
-       card.classList.remove('open', 'show', 'clicked');
-     });    
-     openCards = [];
-   }
-   console.log(openCards);
- }
+     setTimeout(function() {
+       cards.forEach(function(card) {
+         card.classList.remove('open', 'show', 'clicked');
+       });
+       openCards = [];
+     }, 1000);
+ }}
 
 deck.addEventListener('click', function(event) {
   if (event.target.nodeName === 'LI'
