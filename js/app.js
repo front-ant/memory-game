@@ -4,7 +4,7 @@
 let card = document.getElementsByClassName('card');
 const cards = [...card];
 const deck = document.getElementsByClassName('deck').item(0);
-
+const openCards = [];
 
 /*
  * Display the cards on the page
@@ -47,13 +47,19 @@ for (card of cards) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
  function openCard() {
-   if (event.target.nodeName === 'LI') {
      event.target.classList.add('open');
      event.target.classList.add('show');
-     console.log("the card was clicked");
- }};
+ };
+
+function markAsOpened() {
+let currentCard = event.target.firstElementChild.getAttribute("class");
+openCards.push(currentCard);
+console.log(openCards);
+ };
 
 deck.addEventListener('click', function(event) {
+  if (event.target.nodeName === 'LI') {
   openCard();
+  markAsOpened();
 }
-);
+});
