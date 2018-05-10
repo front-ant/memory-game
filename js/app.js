@@ -4,6 +4,8 @@
 let card = document.getElementsByClassName('card');
 const cards = [...card];
 const deck = document.getElementsByClassName('deck').item(0);
+
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -31,6 +33,7 @@ shuffle(cards);
 // *   - add each card's HTML to the page
 for (card of cards) {
   deck.appendChild(card);
+  // console.log(deck);
 };
 
 /*
@@ -44,13 +47,11 @@ for (card of cards) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
  function openCard() {
-   if (event.target.nodeName === 'I') {
-     event.target.parentNode.classList.toggle('open');
-     event.target.parentNode.classList.toggle('show');
-   };
+   if (event.target.nodeName === 'LI') {
      event.target.classList.toggle('open');
      event.target.classList.toggle('show');
- };
+     console.log("the card was clicked");
+ }};
 
 deck.addEventListener('click', function(event) {
   openCard();
