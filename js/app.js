@@ -59,15 +59,17 @@ for (card of cards) {
    if (openCards[0] === openCards[1]) {
       matchedCards.push(openCards[0], openCards[1]);
       console.log(matchedCards);
+      openCards = [];
     }
      else {
        setTimeout(function() {
          cards.forEach(function(card) {
            card.classList.remove('open', 'show', 'clicked');
+           openCards = [];
          });
        }, 1000);
+
      };
-    openCards = [];
  };
 
 
