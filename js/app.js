@@ -5,7 +5,7 @@ let card = document.getElementsByClassName('card');
 const cards = [...card];
 const deck = document.getElementsByClassName('deck').item(0);
 let openCards = [];
-let match = false;
+let matchedCards = [];
 
 /*
  * Display the cards on the page
@@ -52,31 +52,28 @@ for (card of cards) {
  };
 
 function markAsOpened() {
-let currentCardSymbol = event.target.firstElementChild.getAttribute('class');
+let currentCardSymbol = event.target.innerHTML;
 openCards.push(currentCardSymbol);
 console.log(openCards);
  };
 
  function checkMatch() {
    if (openCards[0] === openCards[1]) {
-      match = true;
-      console.log("It's a match!");
+      matchedCards.push(openCards[0], openCards[1]);
+      openCards = [];
+      console.log(matchedCards);
     }
      else {
        match = false;
-       console.log("No match, sorry!")
+       setTimeout(function() {
+         cards.forEach(function(card) {
+           card.classList.remove('open', 'show', 'clicked');
+         });
+         openCards = [];
+       }, 1000);
      };
  };
 
- function matchOrNo() {
-   if (match === false) {
-     setTimeout(function() {
-       cards.forEach(function(card) {
-         card.classList.remove('open', 'show', 'clicked');
-       });
-       openCards = [];
-     }, 1000);
- }}
 
 deck.addEventListener('click', function(event) {
   if (event.target.nodeName === 'LI'
@@ -87,7 +84,6 @@ deck.addEventListener('click', function(event) {
   markAsOpened();
   if (openCards.length === 2) {
       checkMatch();
-      matchOrNo();
     };
 }
 });
