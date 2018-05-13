@@ -50,26 +50,32 @@ for (card of cards) {
  function openCard() {
      let currentCardSymbol = event.target.innerHTML;
      openCards.push(currentCardSymbol);
-     event.target.classList.add('open', 'show');
-     console.log(openCards);
+     event.target.classList.add('open', 'show', 'active');
  };
 
 
  function checkMatch() {
+   let activeCard = document.getElementsByClassName('active');
+   const activeCards = [...activeCard];
    if (openCards[0] === openCards[1]) {
       matchedCards.push(openCards[0], openCards[1]);
+      activeCards.forEach(function(activeCard) {
+        activeCard.classList.remove('active');
+      });
       console.log(matchedCards);
       openCards = [];
+
     }
      else {
        setTimeout(function() {
-         cards.forEach(function(card) {
-           card.classList.remove('open', 'show', 'clicked');
-           openCards = [];
+         activeCards.forEach(function(activeCard) {
+           activeCard.classList.remove('open', 'show', 'clicked', 'active');
          });
+           openCards = [];
        }, 1000);
 
      };
+     console.log(activeCards);
  };
 
 
