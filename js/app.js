@@ -48,30 +48,26 @@ for (card of cards) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
  function openCard() {
+     let currentCardSymbol = event.target.innerHTML;
+     openCards.push(currentCardSymbol);
      event.target.classList.add('open', 'show');
+     console.log(openCards);
  };
 
-function markAsOpened() {
-let currentCardSymbol = event.target.innerHTML;
-openCards.push(currentCardSymbol);
-console.log(openCards);
- };
 
  function checkMatch() {
    if (openCards[0] === openCards[1]) {
       matchedCards.push(openCards[0], openCards[1]);
-      openCards = [];
       console.log(matchedCards);
     }
      else {
-       match = false;
        setTimeout(function() {
          cards.forEach(function(card) {
            card.classList.remove('open', 'show', 'clicked');
          });
-         openCards = [];
        }, 1000);
      };
+    openCards = [];
  };
 
 
@@ -81,7 +77,6 @@ deck.addEventListener('click', function(event) {
   && event.target.classList.contains('clicked') === false) {
   event.target.classList.add('clicked');
   openCard();
-  markAsOpened();
   if (openCards.length === 2) {
       checkMatch();
     };
