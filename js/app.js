@@ -6,6 +6,9 @@ const cards = [...card];
 const deck = document.getElementsByClassName('deck').item(0);
 let openCards = [];
 let matchedCards = [];
+let moveCounter = document.getElementById('moves').innerText;
+let moves = parseInt(moveCounter);
+
 
 /*
  * Display the cards on the page
@@ -62,7 +65,6 @@ for (card of cards) {
       activeCards.forEach(function(activeCard) {
         activeCard.classList.remove('active');
       });
-      console.log(matchedCards);
       openCards = [];
 
     }
@@ -75,7 +77,14 @@ for (card of cards) {
        }, 1000);
 
      };
-     console.log(activeCards);
+ };
+
+ function increaseMoveCounter () {
+   moves += 1;
+   document.getElementById('moves').innerText = moves + " Moves";
+   if (moves === 1) {
+     document.getElementById('moves').innerText = moves + " Move";
+   };
  };
 
 
@@ -87,6 +96,7 @@ deck.addEventListener('click', function(event) {
   openCard();
   if (openCards.length === 2) {
       checkMatch();
+      increaseMoveCounter();
     };
 }
 });
