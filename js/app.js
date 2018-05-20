@@ -4,6 +4,7 @@
 let card = document.getElementsByClassName('card');
 const cards = [...card];
 const deck = document.getElementsByClassName('deck').item(0);
+const stars = document.getElementsByClassName('stars');
 let openCards = [];
 let matchedCards = [];
 let moveCounter = document.getElementById('moves').innerText;
@@ -37,7 +38,6 @@ shuffle(cards);
 // *   - add each card's HTML to the page
 for (card of cards) {
   deck.appendChild(card);
-  // console.log(deck);
 };
 
 /*
@@ -85,6 +85,9 @@ for (card of cards) {
    if (moves === 1) {
      document.getElementById('moves').innerText = moves + " Move";
    };
+   if (moves >= 2) {
+     console.log(stars);
+   }
  };
 
 
@@ -98,5 +101,8 @@ deck.addEventListener('click', function(event) {
       checkMatch();
       increaseMoveCounter();
     };
+  if (matchedCards.length === 16) {
+    alert('Congrats!');
+  };
 }
 });
