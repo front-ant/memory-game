@@ -4,7 +4,7 @@
 let card = document.getElementsByClassName('card');
 const cards = [...card];
 const deck = document.getElementsByClassName('deck').item(0);
-const stars = document.getElementsByClassName('stars');
+const stars = document.querySelector('.stars');
 let openCards = [];
 let matchedCards = [];
 let moveCounter = document.getElementById('moves').innerText;
@@ -85,9 +85,15 @@ for (card of cards) {
    if (moves === 1) {
      document.getElementById('moves').innerText = moves + " Move";
    };
-   if (moves >= 2) {
-     console.log(stars);
-   }
+   if (moves === 18) {
+     stars.removeChild(stars.querySelector('li'));
+   };
+   if (moves === 25) {
+     stars.removeChild(stars.querySelector('li'));
+   };
+   if (moves === 30) {
+     stars.removeChild(stars.querySelector('li'))
+   };
  };
 
 
@@ -102,7 +108,7 @@ deck.addEventListener('click', function(event) {
       increaseMoveCounter();
     };
   if (matchedCards.length === 16) {
-    alert('Congrats!');
+    alert('Congrats! You finished the game in ' + moves + ' moves!');
   };
 }
 });
