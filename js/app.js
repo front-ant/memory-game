@@ -9,6 +9,7 @@ let activeCards = [];
 let matchedCards = [];
 let moveCounter = document.getElementById('moves').innerText;
 let moves = parseInt(moveCounter);
+let starRating = "three stars! ***";
 let time = 0;
 let timerVar = null;
 
@@ -70,13 +71,16 @@ function increaseMoveCounter () {//only fires after a match is checked so it won
      document.getElementById('moves').innerText = moves + ' Move';
   };
   if (moves === 18) {//star rating goes down with increasing moves, might be better in a separate function
-     stars.removeChild(stars.querySelector('li'));
+    stars.removeChild(stars.querySelector('li'));
+    starRating = "two stars! **";
   };
   if (moves === 25) {
-   stars.removeChild(stars.querySelector('li'));
+    stars.removeChild(stars.querySelector('li'));
+    starRating = "one star! *";
   };
   if (moves === 30) {
-   stars.removeChild(stars.querySelector('li'))
+    stars.removeChild(stars.querySelector('li'))
+    starRating = "no stars. :(";
   };
 };
 
@@ -101,7 +105,7 @@ deck.addEventListener('click', function firstClick(event) {
       clearInterval(timerVar);
       deck.removeEventListener('click', clickOnCard);
       setTimeout(function() {//timeout prevents end game message from popping up before the second card is opened
-        let endGameMessage = confirm('Congrats! You finished the game in ' + moves + ' moves and ' + time + ' seconds! Another round?');
+        let endGameMessage = confirm('Congrats! You finished the game in ' + moves + ' moves and ' + time + ' seconds! You have earned ' + starRating + ' Another round?');
         if (endGameMessage === true) {
           location.reload();
         }
