@@ -5,6 +5,7 @@ let card = document.getElementsByClassName('card');
 const cards = [...card];
 const deck = document.getElementsByClassName('deck').item(0);
 const stars = document.querySelector('.stars');
+const timer = document.getElementById('timer');
 let openCards = [];
 let matchedCards = [];
 let moveCounter = document.getElementById('moves').innerText;
