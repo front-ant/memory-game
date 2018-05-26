@@ -9,6 +9,8 @@ let matchedCards = [];
 let moveCounter = document.getElementById('moves').innerText;
 let moves = parseInt(moveCounter);
 let time = 0;
+let timerVar = null;
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -32,10 +34,15 @@ for (card of cards) {
 };
  //Display the card's symbol, add card to a list of opened cards
  function openCard() {
+   if (event.target.nodeName === 'LI'//only fires if a card is clicked
+   && openCards.length < 2//not more than two cards should be open at a time
+   && (!event.target.classList.contains('open')//will not fire if the card is already open or matched
+   && !event.target.classList.contains('show')
+   && !event.target.classList.contains('match'))) {//only if the conditions are met, the following sequence of functions will be executed:
      let currentCardSymbol = event.target.innerHTML;
      openCards.push(currentCardSymbol);
      event.target.classList.add('open', 'show');
- };
+ }};
 
 //Check whether a card is a match, add matched cards to a special list
  function checkMatch() {
@@ -79,38 +86,30 @@ for (card of cards) {
    };
  };
 
-  const increaseTimer = function() {
+function increaseTimer() {
     time += 1;
     timer.innerHTML = 'Time: ' + time;
   }
-
-deck.addEventListener('click', function firstClick(event) {//start timer on first click on card
-  if (event.target.nodeName === 'LI') {
-  let timerVar = setInterval(increaseTimer, 1000);
-  increaseTimer();
-  deck.removeEventListener('click', firstClick);
-}
-})
 
 restartButton.addEventListener('click', function() {
   location.reload();
 })
 
-  deck.addEventListener('click', function clickOnCard(event) {
-  if (event.target.nodeName === 'LI'//only fires if a card is clicked
-  && openCards.length < 2//not more than two cards should be open at a time
-  && (!event.target.classList.contains('open')//will not fire if the card is already open or matched
-  && !event.target.classList.contains('show')
-  && !event.target.classList.contains('match'))) {//only if the conditions are met, the following sequence of functions will be executed:
+
+deck.addEventListener('click', function firstClick(event) {
+  let timerVar = setInterval(increaseTimer, 1000);
   openCard();
-  if (openCards.length === 2) {
+  deck.removeEventListener('click', firstClick);
+  deck.addEventListener('click', function clickOnCard(event) {
+      openCard();
+    if (openCards.length === 2) {
       checkMatch();
       increaseMoveCounter();
     };
-  if (matchedCards.length === 2) {//end of game
-    alert('Congrats! You finished the game in ' + moves + ' moves and ' + time + ' seconds!');
-    clearInterval(timerVar)
-    deck.removeEventListener('click', clickOnCard);
-  };
-}
+    if (matchedCards.length === 2) {//end of game
+      alert('Congrats! You finished the game in ' + moves + ' moves and ' + time + ' seconds!');
+      clearInterval(timerVar);
+      deck.removeEventListener('click', clickOnCard);
+    };
+  });
 });
