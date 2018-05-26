@@ -29,18 +29,6 @@ shuffle(cards);
 for (card of cards) {
   deck.appendChild(card);
 };
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
  //Display the card's symbol, add card to a list of opened cards
  function openCard() {
      let currentCardSymbol = event.target.innerHTML;
@@ -97,13 +85,12 @@ window.onload = function startGame() {
     timer.innerHTML = 'Time: ' + time;
   }
 
-  deck.addEventListener('click', function(event) {
+  deck.addEventListener('click', function clickOnCard(event) {
   if (event.target.nodeName === 'LI'//only fires if a card is clicked
   && openCards.length < 2//not more than two cards should be open at a time
   && (!event.target.classList.contains('open')//will not fire if the card is already open or matched
   && !event.target.classList.contains('show')
-  && !event.target.classList.contains('match'))
-) {//only if the conditions are met, the following sequence of functions will be executed:
+  && !event.target.classList.contains('match'))) {//only if the conditions are met, the following sequence of functions will be executed:
   openCard();
   if (openCards.length === 2) {
       checkMatch();
@@ -111,6 +98,8 @@ window.onload = function startGame() {
     };
   if (matchedCards.length === 2) {//end of game
     alert('Congrats! You finished the game in ' + moves + ' moves and ' + time + ' seconds!');
+    clearInterval(timerVar)
+    deck.removeEventListener('click', clickOnCard);
   };
 }
 });
