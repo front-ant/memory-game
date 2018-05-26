@@ -4,7 +4,8 @@ const deck = document.getElementsByClassName('deck').item(0);
 const stars = document.querySelector('.stars');
 const timer = document.getElementById('timer');
 const restartButton = document.querySelector('.restart');
-let openCards = [];
+let activeCard = document.getElementsByClassName('open', 'show');
+let activeCards = [];
 let matchedCards = [];
 let moveCounter = document.getElementById('moves').innerText;
 let moves = parseInt(moveCounter);
@@ -35,32 +36,29 @@ for (card of cards) {
 
 function openCard() { //Display the card's symbol, add card to a list of opened cards
    if (event.target.nodeName === 'LI'//only fires if a card is clicked
-   && openCards.length < 2//not more than two cards should be open at a time
+   && activeCards.length < 2//not more than two cards should be open at a time
    && (!event.target.classList.contains('open')//will not fire if the card is already open or matched
    && !event.target.classList.contains('show')
    && !event.target.classList.contains('match'))) {//only if the conditions are met, the following sequence of functions will be executed:
-     let currentCardSymbol = event.target.innerHTML;
-     openCards.push(currentCardSymbol);
      event.target.classList.add('open', 'show');
+     activeCards = [...activeCard];
  }};
 
 function checkMatch() {//Check whether a card is a match, add matched cards to a special list
-  let activeCard = document.getElementsByClassName('open', 'show');
-  const activeCards = [...activeCard];
-  if (openCards[0] === openCards[1]) {
-    matchedCards.push(openCards[0], openCards[1]);
+  if (activeCards[0].innerHTML === activeCards[1].innerHTML) {
+    matchedCards.push(activeCards[0], activeCards[1]);
     activeCards.forEach(function(activeCard) {
-    activeCard.classList.add('match');
-    activeCard.classList.remove('open', 'show');
+      activeCard.classList.add('match');
+      activeCard.classList.remove('open', 'show');
     });
-    openCards = [];
+    activeCards = [];
   }
   else {//close unmatched cards after 1 second
     setTimeout(function() {
     activeCards.forEach(function(activeCard) {
     activeCard.classList.remove('open', 'show');
     });
-    openCards = [];
+    activeCards = [];
   }, 1000);
   };
  };
@@ -95,17 +93,19 @@ deck.addEventListener('click', function firstClick(event) {
   deck.removeEventListener('click', firstClick);//removed so the timer can't be increased by clicking after the first click
   deck.addEventListener('click', function clickOnCard(event) {//this is the event listener for all the following clicks on the cards
     openCard();
-    if (openCards.length === 2) {
+    if (activeCards.length === 2) {
       checkMatch();
       increaseMoveCounter();
     };
-    if (matchedCards.length === 2) {//end of game
+    if (matchedCards.length === 16) {//end of game
       clearInterval(timerVar);
       deck.removeEventListener('click', clickOnCard);
-      let endGameMessage = confirm('Congrats! You finished the game in ' + moves + ' moves and ' + time + ' seconds! Another round?');
-      if (endGameMessage === true) {
-        location.reload();
-      }
+      setTimeout(function() {//timeout prevents end game message from popping up before the second card is opened
+        let endGameMessage = confirm('Congrats! You finished the game in ' + moves + ' moves and ' + time + ' seconds! Another round?');
+        if (endGameMessage === true) {
+          location.reload();
+        }
+      }, 500)
     };
   });
 });
