@@ -100,9 +100,12 @@ deck.addEventListener('click', function firstClick(event) {
       increaseMoveCounter();
     };
     if (matchedCards.length === 2) {//end of game
-      alert('Congrats! You finished the game in ' + moves + ' moves and ' + time + ' seconds!');
       clearInterval(timerVar);
       deck.removeEventListener('click', clickOnCard);
+      let endGameMessage = confirm('Congrats! You finished the game in ' + moves + ' moves and ' + time + ' seconds! Another round?');
+      if (endGameMessage === true) {
+        location.reload();
+      }
     };
   });
 });
