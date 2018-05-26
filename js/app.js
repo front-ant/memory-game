@@ -78,12 +78,19 @@ for (card of cards) {
    };
  };
 
-window.onload = function startGame() {
-  let timerVar = setInterval(increaseTimer, 1000);
-  function increaseTimer() {
+  const increaseTimer = function() {
     time += 1;
     timer.innerHTML = 'Time: ' + time;
   }
+
+deck.addEventListener('click', function firstClick(event) {//start timer on first click on card
+  if (event.target.nodeName === 'LI') {
+  let timerVar = setInterval(increaseTimer, 1000);
+  increaseTimer();
+  deck.removeEventListener('click', firstClick);
+}
+})
+
 
   deck.addEventListener('click', function clickOnCard(event) {
   if (event.target.nodeName === 'LI'//only fires if a card is clicked
@@ -103,4 +110,3 @@ window.onload = function startGame() {
   };
 }
 });
-}
