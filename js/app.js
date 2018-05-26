@@ -3,6 +3,7 @@ const cards = [...card];
 const deck = document.getElementsByClassName('deck').item(0);
 const stars = document.querySelector('.stars');
 const timer = document.getElementById('timer');
+const restartButton = document.querySelector('.restart');
 let openCards = [];
 let matchedCards = [];
 let moveCounter = document.getElementById('moves').innerText;
@@ -91,6 +92,9 @@ deck.addEventListener('click', function firstClick(event) {//start timer on firs
 }
 })
 
+restartButton.addEventListener('click', function() {
+  location.reload();
+})
 
   deck.addEventListener('click', function clickOnCard(event) {
   if (event.target.nodeName === 'LI'//only fires if a card is clicked
