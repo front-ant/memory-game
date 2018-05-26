@@ -1,6 +1,3 @@
-/*
- * Create a list that holds all of your cards
- */
 let card = document.getElementsByClassName('card');
 const cards = [...card];
 const deck = document.getElementsByClassName('deck').item(0);
@@ -10,13 +7,6 @@ let openCards = [];
 let matchedCards = [];
 let moveCounter = document.getElementById('moves').innerText;
 let moves = parseInt(moveCounter);
-
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *
- */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -35,8 +25,6 @@ function shuffle(array) {
 
 shuffle(cards);
 
-// loop through each card and create its HTML
-// *   - add each card's HTML to the page
 for (card of cards) {
   deck.appendChild(card);
 };
@@ -51,13 +39,15 @@ for (card of cards) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+ //Display the card's symbol, add card to a list of opened cards
  function openCard() {
      let currentCardSymbol = event.target.innerHTML;
      openCards.push(currentCardSymbol);
      event.target.classList.add('open', 'show');
  };
 
-
+//Check whether a card is a match, add matched cards to a special list
  function checkMatch() {
    let activeCard = document.getElementsByClassName('open', 'show');
    const activeCards = [...activeCard];
@@ -70,7 +60,7 @@ for (card of cards) {
       openCards = [];
 
     }
-     else {
+     else {//close unmatched cards after 1 second
        setTimeout(function() {
          activeCards.forEach(function(activeCard) {
            activeCard.classList.remove('open', 'show');
@@ -81,13 +71,14 @@ for (card of cards) {
      };
  };
 
+//only fires after a match is checked so it won't track every click
  function increaseMoveCounter () {
    moves += 1;
    document.getElementById('moves').innerText = moves + " Moves";
-   if (moves === 1) {
+   if (moves === 1) {//This is petty but I like it
      document.getElementById('moves').innerText = moves + " Move";
    };
-   if (moves === 18) {
+   if (moves === 18) {//star rating goes down with increasing moves, might be better in a separate function
      stars.removeChild(stars.querySelector('li'));
    };
    if (moves === 25) {
@@ -98,20 +89,20 @@ for (card of cards) {
    };
  };
 
-
+//This might as well be a startGame function or something like that...
 deck.addEventListener('click', function(event) {
-  if (event.target.nodeName === 'LI'
-  && openCards.length < 2
-  && (!event.target.classList.contains('open')
-  && !event.target.classList.contains('show'))
-
-) {
+  if (event.target.nodeName === 'LI'//only fires if a card is clicked
+  && openCards.length < 2//not more than two cards should be open at a time
+  && (!event.target.classList.contains('open')//will not fire if the card is already open or matched
+  && !event.target.classList.contains('show')
+  && !event.target.classList.contains('match'))
+) {//only if the conditions are met, the following sequence of functions will be executed:
   openCard();
   if (openCards.length === 2) {
       checkMatch();
       increaseMoveCounter();
     };
-  if (matchedCards.length === 16) {
+  if (matchedCards.length === 16) {//end of game
     alert('Congrats! You finished the game in ' + moves + ' moves!');
   };
 }
