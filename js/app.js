@@ -53,17 +53,18 @@ for (card of cards) {
  function openCard() {
      let currentCardSymbol = event.target.innerHTML;
      openCards.push(currentCardSymbol);
-     event.target.classList.add('open', 'show', 'active');
+     event.target.classList.add('open', 'show');
  };
 
 
  function checkMatch() {
-   let activeCard = document.getElementsByClassName('active');
+   let activeCard = document.getElementsByClassName('open', 'show');
    const activeCards = [...activeCard];
    if (openCards[0] === openCards[1]) {
       matchedCards.push(openCards[0], openCards[1]);
       activeCards.forEach(function(activeCard) {
-        activeCard.classList.remove('active');
+        activeCard.classList.add('match');
+        activeCard.classList.remove('open', 'show');
       });
       openCards = [];
 
@@ -71,7 +72,7 @@ for (card of cards) {
      else {
        setTimeout(function() {
          activeCards.forEach(function(activeCard) {
-           activeCard.classList.remove('open', 'show', 'clicked', 'active');
+           activeCard.classList.remove('open', 'show');
          });
            openCards = [];
        }, 1000);
@@ -100,8 +101,10 @@ for (card of cards) {
 deck.addEventListener('click', function(event) {
   if (event.target.nodeName === 'LI'
   && openCards.length < 2
-  && event.target.classList.contains('clicked') === false) {
-  event.target.classList.add('clicked');
+  && (!event.target.classList.contains('open')
+  && !event.target.classList.contains('show'))
+
+) {
   openCard();
   if (openCards.length === 2) {
       checkMatch();
