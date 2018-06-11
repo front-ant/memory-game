@@ -35,7 +35,7 @@ for (card of cards) {
 
 //FUNCTIONALITY OF THE GAME
 
-function openCard() { //Display the card's symbol, add card to a list of opened cards
+function openCard(event) { //Display the card's symbol, add card to a list of opened cards
    if (event.target.nodeName === 'LI'//only fires if a card is clicked
    && activeCards.length < 2//not more than two cards should be open at a time
    && (!event.target.classList.contains('open')//will not fire if the card is already open or matched
@@ -89,31 +89,36 @@ function increaseTimer() {
   timer.innerHTML = 'Time: ' + time;
 }
 
-//EVENT LISTENERS
-
-deck.addEventListener('click', function firstClick(event) {
+function firstClick(event) {
   let timerVar = setInterval(increaseTimer, 1000);
-  openCard();
-  deck.removeEventListener('click', firstClick);//removed so the timer can't be increased by clicking after the first click
-  deck.addEventListener('click', function clickOnCard(event) {//this is the event listener for all the following clicks on the cards
-    openCard();
-    if (activeCards.length === 2) {
-      checkMatch();
-      increaseMoveCounter();
-    };
+  openCard(event);
+  deck.removeEventListener('click', firstClick);
+}
+
+function clickOnCard(event) {
+  openCard(event);
+  if (activeCards.length === 2) {
+    checkMatch();
+    increaseMoveCounter();
     if (matchedCards.length === 16) {//end of game
       clearInterval(timerVar);
       deck.removeEventListener('click', clickOnCard);
       setTimeout(function() {//timeout prevents end game message from popping up before the second card is opened
         let endGameMessage = confirm('Congrats! You finished the game in ' + moves + ' moves and ' + time + ' seconds! You have earned ' + starRating + ' Another round?');
-        if (endGameMessage === true) {
+        if (endGameMessage === true) {//TODO timer keeps ticking when cancel is chosen!
           location.reload();
         }
       }, 500)
-    };
-  });
-});
+}}}
 
+
+
+
+
+//EVENT LISTENERS
+
+deck.addEventListener('click', firstClick);
+deck.addEventListener('click', clickOnCard);
 restartButton.addEventListener('click', function() {
   location.reload();
 });
