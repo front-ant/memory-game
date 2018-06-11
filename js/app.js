@@ -1,6 +1,6 @@
 let card = document.getElementsByClassName('card');
 const cards = [...card];
-const deck = document.getElementsByClassName('deck').item(0);
+const deck = document.querySelector('.deck');
 const stars = document.querySelector('.stars');
 const timer = document.getElementById('timer');
 const restartButton = document.querySelector('.restart');
@@ -16,7 +16,7 @@ let timerVar = null;
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
+  let currentIndex = array.length, temporaryValue, randomIndex;
   while (currentIndex !== 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
@@ -29,9 +29,10 @@ function shuffle(array) {
 
 shuffle(cards);
 
-for (card of cards) {
+cards.forEach(function(card) {
   deck.appendChild(card);
-};
+}
+);
 
 //FUNCTIONALITY OF THE GAME
 
@@ -43,7 +44,7 @@ function openCard(event) { //Display the card's symbol, add card to a list of op
    && !event.target.classList.contains('match'))) {//only if the conditions are met, the following sequence of functions will be executed:
      event.target.classList.add('open', 'show');
      activeCards = [...activeCard];
- }};
+ }}
 
 function checkMatch() {//Check whether a card is a match, add matched cards to a special list
   if (activeCards[0].innerHTML === activeCards[1].innerHTML) {
@@ -56,33 +57,33 @@ function checkMatch() {//Check whether a card is a match, add matched cards to a
   }
   else {//close unmatched cards after 1 second
     setTimeout(function() {
-    activeCards.forEach(function(activeCard) {
-    activeCard.classList.remove('open', 'show');
-    });
+      activeCards.forEach(function(activeCard) {
+      activeCard.classList.remove('open', 'show');
+      });
     activeCards = [];
   }, 1000);
-  };
- };
+  }
+ }
 
-function increaseMoveCounter () {//only fires after a match is checked so it won't track every click
+function increaseMoveCounter() {//only fires after a match is checked so it won't track every click
   moves += 1;
   document.getElementById('moves').innerText = moves + ' Moves';
   if (moves === 1) {//This is petty but I like it
      document.getElementById('moves').innerText = moves + ' Move';
-  };
+  }
   if (moves === 18) {//star rating goes down with increasing moves, might be better in a separate function
     stars.removeChild(stars.querySelector('li'));
     starRating = "two stars! **";
-  };
+  }
   if (moves === 25) {
     stars.removeChild(stars.querySelector('li'));
     starRating = "one star! *";
-  };
+  }
   if (moves === 30) {
-    stars.removeChild(stars.querySelector('li'))
+    stars.removeChild(stars.querySelector('li'));
     starRating = "no stars. :(";
-  };
-};
+  }
+}
 
 function increaseTimer() {
   time += 1;
@@ -108,7 +109,7 @@ function clickOnCard(event) {
         if (endGameMessage === true) {//TODO timer keeps ticking when cancel is chosen!
           location.reload();
         }
-      }, 500)
+      }, 500);
 }}}
 
 
