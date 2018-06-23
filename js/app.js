@@ -64,7 +64,7 @@ function checkMatch() {//Check whether a card is a match, add matched cards to a
   };
  };
 
-function increaseMoveCounter () {//only fires after a match is checked so it won't track every click
+function increaseMoveCounter() {//only fires after a match is checked so it won't track every click
   moves += 1;
   document.getElementById('moves').innerText = moves + ' Moves';
   if (moves === 1) {//This is petty but I like it
